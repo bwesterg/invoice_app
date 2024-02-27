@@ -11,9 +11,15 @@ export default function Header({handlePrint}) {
             </div>
             <div>
                 <ul className="flex items-center justify-between flex-wrap">
-                <li><button className="btn btn-print" onClick={handlePrint}>Print</button></li>
-                <li><button className="btn btn-download">Download</button></li>
-                <li><button className="btn btn-send">Send</button></li>
+                <li><button className="bg-gray-500 font-bold py-2 px-8 text-white rounded shadow 
+                border-2 border-gray-500 hover:bg-transparent hover:text-gray-500 transition-all
+                duration-300" onClick={handlePrint}>Print</button></li>
+                <li className="mx-2"><button className="bg-green-500 font-bold py-2 px-8 text-white rounded shadow 
+                border-2 border-green-500 hover:bg-transparent hover:text-green-500 transition-all
+                duration-300">Download</button></li>
+                <li><button className="bg-blue-500 font-bold py-2 px-8 text-white rounded shadow 
+                border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all
+                duration-300">Send</button></li>
                 </ul>
             </div>
             </header>
