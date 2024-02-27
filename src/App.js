@@ -18,6 +18,7 @@ function App() {
   const [bankName, setBankName] = useState("");
   const [bankAccount, setBankAccount] = useState("");
   const [website, setWebsite] = useState("");
+  const [clientName, setClientName] = useState("");
   const [clientAddress, setClientAddress] = useState("");
   const [invoiceNumber, setInvoiceNumber] = useState("");
   const [invoiceDate, setInvoiceDate] = useState("");
@@ -33,15 +34,24 @@ function App() {
 
   return (
     <>
-      <main className="m-5 p-5 xl:max-w-4xl xl:mx-auto lg:mx-auto bg-white rounded shadow">
+      <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl xl:max-w-4xl bg-white rounded shadow">
         {showInvoice ? <div>
           <Header handlePrint={handlePrint} />
-          <MainDetails />
-          <ClientDetails />
-          <Dates />
+          <MainDetails name={name} address={address}/>
+          <ClientDetails clientName={clientName} clientAddress={clientAddress}/>
+          <Dates invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate}/>
           <Table />
-          <Notes />
-          <Footer />
+          <Notes notes={notes} />
+          <Footer 
+            name={name} 
+            address={address} 
+            website={website} 
+            email={email}
+            phone={phone}
+            bankAccount={bankAccount}
+            bankName={bankName}
+          />
+
           <button onClick={()=>setShowInvoice(false)} className="mt-5 bg-blue-500 font-bold py-2 px-8 text-white rounded shadow 
                 border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all
                 duration-300">Edit information</button>
@@ -80,7 +90,104 @@ function App() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              
+              <label htmlFor="website">Enter your website</label>
+              <input 
+                type="url" 
+                name="website" 
+                id="website" 
+                placeholder="Enter your website"
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+              <label htmlFor="phone">Enter your phone</label>
+              <input 
+                type="telephone" 
+                name="phone" 
+                id="phone" 
+                placeholder="Enter your phone"
+                autoComplete="off"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+              <label htmlFor="bankName">Enter Bank Name</label>
+              <input 
+                type="text" 
+                name="bankName" 
+                id="bankName" 
+                placeholder="Enter your BankName"
+                autoComplete="off"
+                value={bankName}
+                onChange={(e) => setBankName(e.target.value)}
+              />
+              <label htmlFor="bankAccount">Enter Bank Account Number</label>
+              <input 
+                type="number" 
+                name="bankAccount" 
+                id="bankAccount" 
+                placeholder="Enter your bank Account"
+                autoComplete="off"
+                value={bankAccount}
+                onChange={(e) => setBankAccount(e.target.value)}
+              />
+              <label htmlFor="clientName">Enter Client Name</label>
+              <input 
+                type="text" 
+                name="clientName" 
+                id="clientName" 
+                placeholder="Enter your client name"
+                autoComplete="off"
+                value={clientName}
+                onChange={(e) => setClientName(e.target.value)}
+              />
+              <label htmlFor="clientAddress">Enter Client Address</label>
+              <input 
+                type="text" 
+                name="clientAddress" 
+                id="clientAddress" 
+                placeholder="Enter your client Address"
+                autoComplete="off"
+                value={clientAddress}
+                onChange={(e) => setClientAddress(e.target.value)}
+              />
+              <label htmlFor="invoiceNumber">Enter Invoice Number</label>
+              <input 
+                type="text" 
+                name="invoiceNumber" 
+                id="invoiceNumber" 
+                placeholder="Enter your invoice number"
+                autoComplete="off"
+                value={invoiceNumber}
+                onChange={(e) => setInvoiceNumber(e.target.value)}
+              />
+              <label htmlFor="invoiceDate">Enter Invoice Date</label>
+              <input 
+                type="date" 
+                name="invoiceDate" 
+                id="invoiceDate" 
+                placeholder="Enter your invoice Date"
+                autoComplete="off"
+                value={invoiceDate}
+                onChange={(e) => setInvoiceDate(e.target.value)}
+              />
+              <label htmlFor="dueDate">Enter Due Date</label>
+              <input 
+                type="date" 
+                name="dueDate" 
+                id="dueDate" 
+                placeholder="Invoice Due Date"
+                autoComplete="off"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
+              <label htmlFor="notes">Additional Notes</label>
+              <textarea 
+                name="notes" 
+                id="notes" 
+                placeholder="Additional notes to client" 
+                value={notes} 
+                onChange={(e) => setNotes(e.target.value)}>
+              </textarea>
               <button onClick={()=> setShowInvoice(true)} className="bg-blue-500 font-bold py-2 px-8 text-white rounded shadow 
                 border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all
                 duration-300"

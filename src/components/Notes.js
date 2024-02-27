@@ -1,13 +1,11 @@
 import React from 'react'
 
-export default function Notes() {
+export default function Notes({notes}) {
     return (
         <>
-            <section className="my-5">
-            {/* Textarea */}
-                <p>Notes to the client...</p>
+            <section className="mb-5">
+                <p className="lg:w-1/2 text-justify">{notes}</p>
             </section>
-            {/* end of notes */}
         </>
     )
 }
