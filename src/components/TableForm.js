@@ -1,5 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from "uuid";
+// ^^ generates unique id for new items
+import { BsTrash } from "react-icons/bs";
+import { CiEdit } from "react-icons/ci";
+
+
 
 export default function TableForm({
     description, 
@@ -13,6 +18,10 @@ export default function TableForm({
     list,
     setList
     }) {
+    
+    const [isEditing, setIsEditing] = useState(false);
+
+        //submit form function
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -31,12 +40,26 @@ export default function TableForm({
         console.log(list)
     }
 
+    // calculate amount function
     useEffect(() => {
         const calculateAmount = (amount) => {
             setAmount(quantity * price);
         }   
         calculateAmount(amount)
     }, [amount,price,quantity,setAmount])
+
+    //edit function
+    const editRow = (id) => {
+        const editingRow = list.find((row) => row.id ===id);
+        setList(list.filter((row) => row.id !== id));
+        setIsEditing(true);
+        setDescription(editingRow.description)
+        setQuantity(editingRow.quantity)
+        setPrice(editingRow.price)
+    }
+
+    //delete function
+    const deleteRow = (id) => setList(list.filter((row) => row.id !== id));
 
     return (
         <>
@@ -91,7 +114,9 @@ export default function TableForm({
                 </div>
                 <button className="mb-5 bg-blue-500 font-bold py-2 px-8 text-white rounded shadow 
                 border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all
-                duration-300" type="submit">Add Item</button>
+                duration-300" type="submit">
+                    {isEditing === "false" ? "AddItem" : "Save Changes"}
+                </button>
             </form>
             {/* Table items */}
  
@@ -106,15 +131,28 @@ export default function TableForm({
                     </thead>
                 {list.map(({ id, description, quantity, price, amount }) => (
                     <React.Fragment key={id} >
-                            <tbody>
-                                <tr>
-                                    <td>{description}</td>
-                                    <td>{quantity}</td>
-                                    <td>{price}</td>
-                                    <td>{amount}</td>
-
-                                </tr>
-                </tbody>
+                        <tbody>
+                            <tr>
+                                <td>{description}</td>
+                                <td>{quantity}</td>
+                                <td>{price}</td>
+                                <td>{amount}</td>
+                                <td>
+                                    <button onClick={()=>deleteRow(id)}>
+                                        <BsTrash 
+                                            className="text-red-500 font-bold text-xl"
+                                        />
+                                    </button>
+                                </td>
+                                <td>
+                                    <button onClick={()=>editRow(id)}>
+                                        <CiEdit 
+                                            className="text-green-500 font-bold text-xl"
+                                        />
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </React.Fragment>
                 ))}
                 </table>
