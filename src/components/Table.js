@@ -1,6 +1,11 @@
 import React from 'react'
 
-export default function Table({description, quantity, price, amount, list}) {
+export default function Table({description, quantity, price, amount, list, total}) {
+    let USDollar = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
     return (
         <>
             <table width="100%" className="mt-10">
@@ -26,6 +31,9 @@ export default function Table({description, quantity, price, amount, list}) {
                     </React.Fragment>
                 ))}
             </table>
+            <div>
+                <h2 className="mt-5 flex items-end justify-end text-gray-800 text-4xl font-bold">Total: {USDollar.format(total)} USD</h2>
+            </div>
         </>
     )
 }
