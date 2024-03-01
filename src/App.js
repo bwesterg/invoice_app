@@ -31,6 +31,7 @@ function App() {
   const [price, setPrice] = useState("");
   const [amount, setAmount] = useState("");
   const [list, setList] = useState([]);
+  const [total,setTotal] = useState(0);
 
 
   
@@ -46,7 +47,16 @@ function App() {
           <MainDetails name={name} address={address}/>
           <ClientDetails clientName={clientName} clientAddress={clientAddress}/>
           <Dates invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate}/>
-          <Table description={description} quantity={quantity} price={price} amount={amount} list={list} setList={setList}/>
+          <Table 
+            description={description} 
+            quantity={quantity} 
+            price={price} 
+            amount={amount} 
+            list={list} 
+            setList={setList}
+            total={total}
+            setTotal={setTotal}
+          />
           <Notes notes={notes} />
           <Footer 
             name={name} 
@@ -233,6 +243,8 @@ function App() {
                   setAmount={setAmount} 
                   list={list}
                   setList={setList}
+                  total={total}
+                  setTotal={setTotal}
                 />
               </article>
               <label htmlFor="notes">Additional Notes</label>

@@ -7,7 +7,7 @@ export default function Dates({
 }) {
     return (
         <>
-            <article className="my- 5 flex items-end justify-end">
+            <article className="my-10 flex items-end justify-end">
                 <ul>
                     <li className="py-1"><span className="font-bold">Invoice Number:</span>{invoiceNumber}</li>
                     <li className="py-1 bg-gray-100"><span className="font-bold">Invoice Date:</span>{invoiceDate}</li>

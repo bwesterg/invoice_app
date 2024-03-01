@@ -16,7 +16,9 @@ export default function TableForm({
     amount, 
     setAmount,
     list,
-    setList
+    setList,
+    total,
+    setTotal
     }) {
     
     const [isEditing, setIsEditing] = useState(false);
@@ -37,8 +39,15 @@ export default function TableForm({
         setPrice("")
         setAmount("")
         setList([...list, newItems])
+        setIsEditing(false)
         console.log(list)
     }
+
+    //convert to USD
+    let USDollar = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
 
     // calculate amount function
     useEffect(() => {
@@ -47,6 +56,18 @@ export default function TableForm({
         }   
         calculateAmount(amount)
     }, [amount,price,quantity,setAmount])
+
+    //calculate total amount of items in table
+    useEffect(() => {
+        let rows = document.querySelectorAll(".amount");
+        let sum = 0;
+        for (let i = 0; i < rows.length; i++ ){
+            if (rows[i].className === "amount") {
+                sum += isNaN(rows[i].innerHTML) ? 0: parseInt(rows[i].innerHTML);
+                setTotal(sum);
+            }
+        }
+    })
 
     //edit function
     const editRow = (id) => {
@@ -60,6 +81,7 @@ export default function TableForm({
 
     //delete function
     const deleteRow = (id) => setList(list.filter((row) => row.id !== id));
+
 
     return (
         <>
@@ -115,7 +137,7 @@ export default function TableForm({
                 <button className="mb-5 bg-blue-500 font-bold py-2 px-8 text-white rounded shadow 
                 border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all
                 duration-300" type="submit">
-                    {isEditing === "false" ? "AddItem" : "Save Changes"}
+                    {isEditing ? "Save Edits" : "Add Table Item"}
                 </button>
             </form>
             {/* Table items */}
@@ -136,7 +158,7 @@ export default function TableForm({
                                 <td>{description}</td>
                                 <td>{quantity}</td>
                                 <td>{price}</td>
-                                <td>{amount}</td>
+                                <td className="amount">{amount}</td>
                                 <td>
                                     <button onClick={()=>deleteRow(id)}>
                                         <BsTrash 
@@ -156,7 +178,9 @@ export default function TableForm({
                     </React.Fragment>
                 ))}
                 </table>
-
+                <div>
+                    <h2 className="flex items-end justify-end text-gray-800 text-4xl font-bold">Total: {USDollar.format(total)} USD</h2>
+                </div>
         </>
     )
 }
