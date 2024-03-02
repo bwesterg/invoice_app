@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import Footer from './components/Footer';
 import Notes from './components/Notes';
@@ -8,6 +8,7 @@ import Dates from './components/Dates';
 import ClientDetails from './components/ClientDetails';
 import MainDetails from './components/MainDetails';
 import Header from './components/Header';
+import ReactToPrint from "react-to-print";
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
   const [list, setList] = useState([]);
   const [total,setTotal] = useState(0);
 
-
+  const componentRef = useRef();
   
   const handlePrint = () => {
     window.print()
@@ -42,36 +43,38 @@ function App() {
   return (
     <>
       <main className="m-5 p-5 md:max-w-xl md:mx-auto lg:max-w-2xl xl:max-w-4xl xl:max-w-4xl bg-white rounded shadow">
-        {showInvoice ? <div>
-          <Header handlePrint={handlePrint} />
-          <MainDetails name={name} address={address}/>
-          <ClientDetails clientName={clientName} clientAddress={clientAddress}/>
-          <Dates invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate}/>
-          <Table 
-            description={description} 
-            quantity={quantity} 
-            price={price} 
-            amount={amount} 
-            list={list} 
-            setList={setList}
-            total={total}
-            setTotal={setTotal}
-          />
-          <Notes notes={notes} />
-          <Footer 
-            name={name} 
-            address={address} 
-            website={website} 
-            email={email}
-            phone={phone}
-            bankAccount={bankAccount}
-            bankName={bankName}
-          />
+        <ReactToPrint trigger={() => <button>Print / Download</button>} content={() => componentRef.current}/>
+        {showInvoice ? 
+          <div ref={componentRef}>
+            <Header handlePrint={handlePrint} />
+            <MainDetails name={name} address={address}/>
+            <ClientDetails clientName={clientName} clientAddress={clientAddress}/>
+            <Dates invoiceNumber={invoiceNumber} invoiceDate={invoiceDate} dueDate={dueDate}/>
+            <Table 
+              description={description} 
+              quantity={quantity} 
+              price={price} 
+              amount={amount} 
+              list={list} 
+              setList={setList}
+              total={total}
+              setTotal={setTotal}
+            />
+            <Notes notes={notes} />
+            <Footer 
+              name={name} 
+              address={address} 
+              website={website} 
+              email={email}
+              phone={phone}
+              bankAccount={bankAccount}
+              bankName={bankName}
+            />
 
-          <button onClick={()=>setShowInvoice(false)} className="mt-5 bg-blue-500 font-bold py-2 px-8 text-white rounded shadow 
-                border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all
-                duration-300">Edit information</button>
-        </div> : (
+            <button onClick={()=>setShowInvoice(false)} className="mt-5 bg-blue-500 font-bold py-2 px-8 text-white rounded shadow 
+                  border-2 border-blue-500 hover:bg-transparent hover:text-blue-500 transition-all
+                  duration-300">Edit information</button>
+          </div> : (
           <>
           {/* name, address, client name, email, phone, bank name, bank account number, 
           website, client address, invoice number, invoice date, due date, table, notes,  */}
